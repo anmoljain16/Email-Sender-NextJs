@@ -7,6 +7,7 @@ function EmailSender() {
     const [recipient, setRecipient] = useState('');
     const[subject, setSubject] = useState('');
     const [content, setContent] = useState('');
+    const[password,setPassword] = useState('')
     const[message,setMessage] = useState({
         error:'',
         success:''
@@ -31,6 +32,11 @@ function EmailSender() {
             setLoading(false)
             return
         }
+        if(password!=='Anmol@123'){
+            setMessage({error:'Wrong Password',success:''})
+            setLoading(false)
+            return
+        }
         try {
             // Make a POST request to your backend endpoint with recipient and content data
             const response = await axios.post('api/send-email', {
@@ -41,14 +47,14 @@ function EmailSender() {
 
             // console.log(response);
             if (response.data.error === false) {
-                setMessage({success:'Email sent successfully',error:''})
+                setMessage({success:response.data.message,error:''})
             } else {
                 // Email sending failed
-                setMessage({error:'Email sending failed',success:''})
+                setMessage({error:response.data.message,success:''})
             }
         } catch (error) {
             console.error('Error occurred:', error);
-            setMessage({error:'Email sending failed',success:''})
+            setMessage({error:'Email sending failed due to some error',success:''})
 
         }
 
@@ -82,6 +88,7 @@ function EmailSender() {
                 <input
                     type="text"
                     id="subject"
+                    placeholder="Enter subject"
                     value={subject}
                     onChange={(e)=>setSubject(e.target.value)}
                 />
@@ -89,8 +96,17 @@ function EmailSender() {
                 <label htmlFor="content">Content:</label>
                 <textarea
                     id="content"
+                    placeholder="Enter email content"
                     value={content}
                     onChange={handleContentChange}
+                />
+
+                <label htmlFor="adminPassword">Admin Password:</label>
+                <input
+                    type="password"
+                    id="adminPassword"
+                    placeholder="Enter admin password"
+                    onChange={(e)=>setPassword(e.target.value)}
                 />
 
                 {loading?<button type="submit" className="disable-btn" disabled>Loading...</button>:<button type="submit" className="disabled-btn" onClick={handleSendEmail}>Send Email</button> }
