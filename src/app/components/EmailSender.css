@@ -1,7 +1,11 @@
 .container {
+
+    height:fit-content;
+
     max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
+
+    margin: 15vh auto;
+    padding: 50px 25px 50px 25px;
     background-color: #f2f2f2;
     border-radius: 8px;
 }
@@ -49,3 +53,4 @@ button:hover {
     color: green;
     margin-bottom: 10px;
 }
+

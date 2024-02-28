@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 // POST endpoint for sending emails
 
 export async function POST(req) {
-    const { recipient, content } = await req.json();
+    const { recipient, subject, content } = await req.json();
     // console.log(recipient);
     // console.log(content);
 
@@ -25,7 +25,7 @@ export async function POST(req) {
             address : process.env.USER
         },
         to: recipient,
-        subject: 'Hello from Node.js',
+        subject: subject +" From Anmol Jain NextJS APP",
         html: content,
     };
 

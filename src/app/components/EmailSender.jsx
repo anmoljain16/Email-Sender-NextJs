@@ -5,6 +5,7 @@ import axios from 'axios';
 
 function EmailSender() {
     const [recipient, setRecipient] = useState('');
+    const[subject, setSubject] = useState('');
     const [content, setContent] = useState('');
     const[message,setMessage] = useState({
         error:'',
@@ -35,6 +36,7 @@ function EmailSender() {
             const response = await axios.post('api/send-email', {
                 recipient,
                 content,
+                subject,
             });
 
             // console.log(response);
@@ -52,6 +54,8 @@ function EmailSender() {
 
         setRecipient('');
         setContent('');
+        setSubject('');
+
         setLoading(false)
 
     };
@@ -73,13 +77,22 @@ function EmailSender() {
                     value={recipient}
                     onChange={handleRecipientChange}
                 />
+                <label htmlFor="subject">Subject:</label>
+                <input
+                    type="text"
+                    id="subject"
+                    value={subject}
+                    onChange={(e)=>setSubject(e.target.value)}
+                />
+
                 <label htmlFor="content">Content:</label>
                 <textarea
                     id="content"
                     value={content}
                     onChange={handleContentChange}
                 />
-                <button type="button" onClick={handleSendEmail}  >{loading?"Loading":"Send Mail"}</button>
+
+                {loading?<button type="submit" className="disable-btn" disabled>Loading...</button>:<button type="submit" className="disabled-btn" onClick={handleSendEmail}>Send Email</button> }
             </form>
         </div>
     );
