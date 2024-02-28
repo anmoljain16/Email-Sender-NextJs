@@ -72,7 +72,8 @@ function EmailSender() {
             <form>
                 <label htmlFor="recipient">Recipient:</label>
                 <input
-                    type="text"
+                    type="email"
+                    placeholder="******@gmail.com"
                     id="recipient"
                     value={recipient}
                     onChange={handleRecipientChange}
